@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 
 const userClient = new PrismaClient().user;
 
-const signUp = async (name: string, email: string, password: string) => {
+const signUp = (name: string, email: string, password: string) => {
   return userClient.create({
     data: {
       name,
@@ -12,9 +12,18 @@ const signUp = async (name: string, email: string, password: string) => {
   });
 };
 
-const login = async (email: string) => {
+const login = (email: string) => {
   return userClient.findUnique({
     where: {
+      email,
+    }
+  });
+};
+
+const validate = (id: number, email: string) => {
+  return userClient.findUnique({
+    where: {
+      id,
       email,
     }
   });
@@ -23,4 +32,5 @@ const login = async (email: string) => {
 export default {
   signUp,
   login,
+  validate,
 };

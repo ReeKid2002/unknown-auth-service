@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { authService } from '../services';
 import { jwtUtil, passwordUtil } from '../utils';
+import { User } from '@prisma/client';
 
 const signUp = async (req: Request, res: Response) => {
   try {
@@ -15,7 +16,6 @@ const signUp = async (req: Request, res: Response) => {
   } catch (error) {
     if(error instanceof Error) 
       res.status(500).json({ error: error.message });
-    console.log(error);
   }
 };
 
@@ -43,11 +43,38 @@ const login = async (req: Request, res: Response) => {
   } catch (error) {
     if(error instanceof Error) 
       res.status(500).json({ error: error.message });
-    console.log(error);
+  }
+};
+
+const validateToken = async (req: Request, res: Response) => {
+  try {
+    const { token } = req.body;
+
+    const payload = await jwtUtil.decodeToken(token) as User;
+    if(!payload) {
+      res.status(401).json({ message: 'Invalid token' });
+      return;
+    }
+
+    const user = await authService.validate(payload.id, payload.email);
+    if(!user) {
+      res.status(401).json({ message: 'Invalid token' });
+      return;
+    }
+
+    const newToken = await jwtUtil.signToken({ id: user.id, email: user.email, name: user.name });
+    res.status(200).json({
+      message: 'Token validated successfully',
+      payload: newToken,
+    });
+  } catch (error) {
+    if(error instanceof Error) 
+      res.status(500).json({ error: error.message });
   }
 };
 
 export default {
   signUp,
   login,
+  validateToken,
 };

@@ -25,7 +25,6 @@ const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     catch (error) {
         if (error instanceof Error)
             res.status(500).json({ error: error.message });
-        console.log(error);
     }
 });
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -50,10 +49,34 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     catch (error) {
         if (error instanceof Error)
             res.status(500).json({ error: error.message });
-        console.log(error);
+    }
+});
+const validateToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { token } = req.body;
+        const payload = yield utils_1.jwtUtil.decodeToken(token);
+        if (!payload) {
+            res.status(401).json({ message: 'Invalid token' });
+            return;
+        }
+        const user = yield services_1.authService.validate(payload.id, payload.email);
+        if (!user) {
+            res.status(401).json({ message: 'Invalid token' });
+            return;
+        }
+        const newToken = yield utils_1.jwtUtil.signToken({ id: user.id, email: user.email, name: user.name });
+        res.status(200).json({
+            message: 'Token validated successfully',
+            payload: newToken,
+        });
+    }
+    catch (error) {
+        if (error instanceof Error)
+            res.status(500).json({ error: error.message });
     }
 });
 exports.default = {
     signUp,
     login,
+    validateToken,
 };
