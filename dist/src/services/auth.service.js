@@ -20,6 +20,14 @@ const signUp = (name, email, password) => __awaiter(void 0, void 0, void 0, func
         }
     });
 });
+const login = (email) => __awaiter(void 0, void 0, void 0, function* () {
+    return userClient.findUnique({
+        where: {
+            email,
+        }
+    });
+});
 exports.default = {
     signUp,
+    login,
 };
