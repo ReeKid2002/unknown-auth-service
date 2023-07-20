@@ -16,44 +16,58 @@ This microservice consists of user-related services. It is responsible for user 
 ## API ENDPOINTS: 🌐
 - > GET: /ping
 ```json
-    response: {
+    {
+      "response": {
       "message": "pong",
+      }
     }
 ```
 - > POST: /api/auth/signup
 ```json
-    body: {
+    {
+      "body": {
         "name": "John Doe",
         "email": "johndoe@email.com",
         "password": "password"
+      }
     }
 
-    response: {
-      "message": "User created successfully",
-      "payload": "jwt token"
+    {
+      "response": {
+        "message": "User created successfully",
+        "payload": "jwt token"
+      }
     }
 ```
 - > POST: /api/auth/login
 ```json
-    body: {
-        "email": "johndoe@email.com",
-        "password": "password",
+    {
+      "body": {
+          "email": "johndoe@email.com",
+          "password": "password",
+      }
     }
 
-    response: {
-      "message": "User logged in successfully",
-      "payload": "jwt token",
+    {
+      "response": {
+        "message": "User logged in successfully",
+        "payload": "jwt token",
+      }
     }
 ```
 - > POST: /api/auth/validate
 ```json
-    body: {
-        "token": "jwt token",
+    {
+      "body": {
+          "token": "jwt token",
+      }
     }
 
-    response: {
-      "message": "Token validated successfully",
-      "payload": "new jwt token"
+    {
+      "response": {
+        "message": "Token validated successfully",
+        "payload": "new jwt token"
+      }
     }
 ```
 
