@@ -11,8 +11,8 @@ app.use('/api/auth', authRoute);
 
 const PORT = process.env.PORT || 5050;
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('HELLO');
+app.get('/ping', (req: Request, res: Response) => {
+  res.status(200).json({ message: 'pong' });
 });
 
 app.listen(PORT, () => {
