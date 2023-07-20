@@ -5,10 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const signToken = (payload) => {
-    return jsonwebtoken_1.default.sign(payload, 'mysecret123'); // TODO: REMOVE STRING AS SECRET
+    return jsonwebtoken_1.default.sign(payload, process.env.JWT_SECRET);
 };
 const decodeToken = (token) => {
-    return jsonwebtoken_1.default.verify(token, 'mysecret123'); // TODO: REMOVE STRING AS SECRET
+    return jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
 };
 exports.default = {
     signToken,
