@@ -70,8 +70,19 @@ This microservice consists of user-related services. It is responsible for user 
       }
     }
 ```
+- > POST: /api/auth/user/:token
+```json
+    {
+    "message": "User data retrieved successfully",
+    "payload": {
+        "id": "user_id",
+        "name": "John Doe",
+        "email": "johndoe@email.com"
+    }
+}
+```
 
 ## LINKS: 🔗
-1. [Postman Collection 🚀](https://drive.google.com/file/d/107LpqKnJEaK__EoSYF1NOmSSwyyfmhSo/view?usp=sharing) 
-2. [Postman Environment Variable 💾](https://drive.google.com/file/d/1gRenp9ClkJ_-ZGjezJtPmv4PkP9AoVV0/view?usp=sharing)
+1. [Postman Collection 🚀](https://drive.google.com/file/d/1SsNLXSRVFRWTUlMGJqd1BLK6vbRyAu-f/view?usp=sharing) 
+2. [Postman Environment Variable 💾](https://drive.google.com/file/d/10DvyfG5r-NuZ-KeR7gy2NL0h8OiLb65f/view?usp=sharing)
 
