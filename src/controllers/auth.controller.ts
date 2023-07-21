@@ -73,8 +73,35 @@ const validateToken = async (req: Request, res: Response) => {
   }
 };
 
+const getUserData = async (req: Request, res: Response) => {
+  try {
+    const { token } = req.params;
+    console.log(token);
+    const decodedToken = jwtUtil.decodeToken(token) as User;
+    if(!decodedToken) {
+      res.status(401).json({ message: 'Invalid token' });
+      return;
+    }
+
+    const user = await authService.getUserData(decodedToken.id, decodedToken.email);
+    if(!user) {
+      res.status(401).json({ message: 'Invalid token' });
+      return;
+    }
+
+    res.status(200).json({
+      message: 'User data retrieved successfully',
+      payload: user,
+    });
+  } catch (error) {
+    if(error instanceof Error)
+      res.status(500).json({ error: error.message });
+  }
+};
+
 export default {
   signUp,
   login,
   validateToken,
+  getUserData,
 };

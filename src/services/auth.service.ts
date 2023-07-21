@@ -29,8 +29,23 @@ const validate = (id: number, email: string) => {
   });
 };
 
+const getUserData = (id: number, email: string) => {
+  return userClient.findUnique({
+    where: {
+      id,
+      email,
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+    }
+  });
+};
+
 export default {
   signUp,
   login,
   validate,
+  getUserData,
 };

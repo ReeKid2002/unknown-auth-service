@@ -75,8 +75,33 @@ const validateToken = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             res.status(500).json({ error: error.message });
     }
 });
+const getUserData = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { token } = req.params;
+        console.log(token);
+        const decodedToken = utils_1.jwtUtil.decodeToken(token);
+        if (!decodedToken) {
+            res.status(401).json({ message: 'Invalid token' });
+            return;
+        }
+        const user = yield services_1.authService.getUserData(decodedToken.id, decodedToken.email);
+        if (!user) {
+            res.status(401).json({ message: 'Invalid token' });
+            return;
+        }
+        res.status(200).json({
+            message: 'User data retrieved successfully',
+            payload: user,
+        });
+    }
+    catch (error) {
+        if (error instanceof Error)
+            res.status(500).json({ error: error.message });
+    }
+});
 exports.default = {
     signUp,
     login,
     validateToken,
+    getUserData,
 };

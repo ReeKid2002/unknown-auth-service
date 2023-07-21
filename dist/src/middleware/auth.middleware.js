@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const authMiddleware = (schema) => {
+const authBodyMiddleware = (schema) => {
     return (req, res, next) => {
         const { error } = schema.validate(req.body);
         if (error) {
@@ -10,4 +10,17 @@ const authMiddleware = (schema) => {
         next();
     };
 };
-exports.default = authMiddleware;
+const authParamsMiddleware = (schema) => {
+    return (req, res, next) => {
+        const { error } = schema.validate(req.params);
+        if (error) {
+            res.status(400).json({ error: error.message });
+            return;
+        }
+        next();
+    };
+};
+exports.default = {
+    authBodyMiddleware,
+    authParamsMiddleware,
+};
