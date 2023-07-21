@@ -73,13 +73,13 @@ This microservice consists of user-related services. It is responsible for user 
 - > POST: /api/auth/user/:token
 ```json
     {
-    "message": "User data retrieved successfully",
-    "payload": {
-        "id": "user_id",
-        "name": "John Doe",
-        "email": "johndoe@email.com"
+      "message": "User data retrieved successfully",
+      "payload": {
+          "id": "user_id",
+          "name": "John Doe",
+          "email": "johndoe@email.com"
+      }
     }
-}
 ```
 
 ## LINKS: 🔗
